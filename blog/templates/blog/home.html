@@ -1,21 +1,18 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    {% if title %}
-        <title>{{ title }}</title>
-    {% else %}
-        <title>Blog</title>
-    {% endif %}
-</head>
-<body>
-    <h1>Welcome to blog</h1>
-    <hr>
-    {% for post in posts %}
-        <h3>{{ post.title }}</h3>
-        <p>By: {{ post.author }} on {{ post.date }}</p>
-        <p>{{ post.content }}</p><br/>
-    {% endfor %}
-</body>
-</html>
+{% extends 'base.html' %}
+{% block content %}
+
+    {% for posts in posts %}
+        <article class="media content-section">
+            <img class="rounded-cirlce article-img" src="{{ posts.author.profile.image.url }}" alt="">
+            <div class="media-body">
+              <div class="article-metadata">
+                <a class="mr-2" href="#">{{ posts.author }}</a>
+                <small class="text-muted">{{ posts.date_posted }}</small>
+              </div>
+              <h2><a class="article-title" href="{% url 'blog-detail' posts.id %}">{{ posts.title }}</a></h2>
+              <p class="article-content">{{ posts.content }}</p>
+            </div>
+            <br>
+          </article>
+    {% endfor  %}
+{% endblock content %}
